@@ -1,0 +1,574 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- <link rel="icon" type="image/svg+xml" href="/vite.svg" /> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WormGame</title>
+    <link rel="icon"type="image/x-icon"href="./static/icon.png">
+    <link rel="stylesheet" href="./css/reset.css" />
+    <style>
+      *{
+        margin: 0;
+        padding: 0;
+      }
+      body{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 3vw;
+        padding-top: 5vw;
+      }
+      #gamezone{
+        display: grid;
+        grid-template-columns: repeat(11, 30px);
+        grid-template-rows: repeat(11,30px);
+        background-color: #fff;
+      }
+      .out{
+        border-radius: 10px 10px 10px 10px;
+        border: 0.8vw dashed #ff005c;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .textarea{
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        padding-bottom: 1vw;
+        font-size: 1.1vw;
+      }
+      .title{
+        font-size: 1.7vw;
+        margin-top: 1vw;
+        margin-bottom: 2vw;
+        font-weight: bold;
+        text-align: center;
+      }
+      #text{
+        font-weight: bold;
+      }
+      #score{
+        color: #ff005c;
+        font-weight: bold;
+        margin-top: 1vw;
+      }
+      .bottom{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-left: 3vw;
+      }
+      .btnGroup{
+        width:16.5vw;
+        margin-left: 3vw;
+      }
+      .btnGroupTop{
+        display: flex;
+        justify-content: center;
+      }
+      .btnGroupBottom{
+        display: flex;
+        justify-content: space-between;
+      }
+      #upArr,#downArr,#leftArr,#rightArr{
+        background-color: #fff;
+        box-shadow: none;
+        border: 1px solid #131313;
+        padding: 2vw;
+        width: 5vw;
+        height: 5vw;
+        margin-bottom: 1vw;
+        font-weight: bold;
+        font-size: 1vw;
+        border-radius: 10px 10px 10px 10px;
+      }
+      #upArr:hover,#downArr:hover,#leftArr:hover,#rightArr:hover{
+        background-color: #f3f3f3;
+        box-shadow: none;
+        border: 1px solid #131313;
+        padding: 2vw;
+        width: 5vw;
+        height: 5vw;
+        margin-bottom: 1vw;
+        font-weight: bold;
+        font-size: 1vw;
+        border-radius: 10px 10px 10px 10px;
+      }
+      .container{
+        display: flex;
+      }
+      .textGroup{
+        width:40%;
+      }
+      .textTitle{
+        width:90%;
+        height: 5vw;
+        background-color: #ff005c;
+        color: #fff;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transform: rotate(12deg);
+        margin-top: 8vw;
+        position: relative;
+        z-index: 999;
+      }
+      .titleMark{
+        position: absolute;
+        top: -5.5vw;
+        color: #ff005c;
+        transform: rotate(-12deg);
+        font-size: 7vw;
+        width: 100%;
+        text-align: right;
+        padding-right: 5vw;
+      }
+      .textDesc{
+        width: 65%;
+        height: 15vw;
+        background-color: #ebebeb;
+        color: #8b8b8b;
+        padding: 3vw;
+        line-height: 2.5vw;
+        font-size: 1vw;
+      }
+      .content{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-left: 13vw;
+      }
+      #score{
+        width: 100%;
+        text-align: left;
+      }
+      .bottomContent{
+        display: flex;
+        align-items: flex-end;
+      }
+      @media(max-width:800px){
+        #gamezone{
+        display: grid;
+        grid-template-columns: repeat(11, 30px);
+        grid-template-rows: repeat(11,30px);
+        background-color: #fff;
+      }
+      .out{
+        width: 350px;
+        border-radius: 10px 10px 10px 10px;
+        border: 2.5vw dashed #ff005c;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .title{
+        font-size: 6vw;
+        margin-top: 3vw;
+        margin-bottom: 8vw;
+        font-weight: bold;
+        text-align: center;
+      }
+      .textarea{
+        display: flex;
+        justify-content: space-between;
+        padding-bottom:6vw;
+        width: 100%;
+        font-size: 4vw;
+      }
+      #text{
+        font-weight: bold;
+      }
+      #score{
+        color: #ff005c;
+        font-weight: bold;
+        margin-top: 6vw;
+      }
+      .bottom{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 70vw;
+        margin-left: 0;
+      }
+      .bottomContent{
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+      }
+      .btnGroup{
+        width:45%;
+        margin-top: 5vw;
+      }
+      .btnGroupTop{
+        display: flex;
+        justify-content: center;
+      }
+      .btnGroupBottom{
+        display: flex;
+        justify-content: space-between;
+      }
+      #upArr,#downArr,#leftArr,#rightArr{
+        background-color: #fff;
+        box-shadow: none;
+        border: 1px solid #131313;
+        padding: 5vw;
+        width: 13vw;
+        height: 13vw;
+        margin-bottom: 3vw;
+        font-weight: bold;
+        font-size: 5vw;
+        border-radius: 10px 10px 10px 10px;
+      }
+      #upArr:hover,#downArr:hover,#leftArr:hover,#rightArr:hover{
+        background-color: #f3f3f3;
+        box-shadow: none;
+        border: 1px solid #131313;
+        padding: 5vw;
+        width: 13vw;
+        height: 13vw;
+        margin-bottom: 3vw;
+        font-weight: bold;
+        font-size: 5vw;
+        border-radius: 10px 10px 10px 10px;
+      }
+      .container{
+        display: block;
+      }
+      .textGroup{
+        width:40%;
+      }
+      .textTitle{
+        width:110%;
+        height: 10vw;
+        background-color: #ff005c;
+        color: #fff;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transform: rotate(12deg);
+        margin-top: 8vw;
+        position: relative;
+        z-index: 999;
+      }
+      .titleMark{
+        position: absolute;
+        top: -6vw;
+        color: #ff005c;
+        transform: rotate(-12deg);
+        font-size: 10vw;
+        width: 100%;
+        text-align: right;
+        padding-right: 5vw;
+      }
+      .textDesc{
+        width: 100%;
+        height: 35vw;
+        background-color: #ebebeb;
+        color: #8b8b8b;
+        padding: 3vw;
+        line-height: 5vw;
+        font-size: 3.5vw;
+      }
+      .content{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin:0;
+      }
+      #score{
+        width: 100%;
+        text-align: left;
+      }
+      }
+    </style>
+  </head>
+  <body id="body">
+    <div class="container">
+      <div class="content">
+        <div class="title">非常贪吃青虫，使TP旋转&#128027;&#128171;&#128171;</div>
+      <div class="textarea">
+        <div>吃掉黑暗生物，看你能变多长！&#128523;</div><div id="text"></div>
+      </div>
+      <div class="out">
+        <div id="gamezone">
+        </div>
+      </div>
+      <div id="score">最高记录：0</div>
+      </div>
+      <div class="bottom">
+        <div class="bottomContent">
+          <div class="textGroup">
+            <div class="textTitle">
+              <div class="titleMark">?</div>
+              <div class="titleText">这是什么？</div>
+            </div>
+            <div class="textDesc">
+              这是一个我给朋友OC写着玩的小游戏网页。请不要盗用页面上的角色。原生JS编写，使用W、A、S、D或↑、←、↓、→来操控角色移动。
+            </div>
+          </div>
+          <div class="btnGroup">
+            <div class="btnGroupTop">
+              <button id="upArr">↑</button>
+            </div>
+            <div class="btnGroupBottom">
+              <button id="leftArr">←</button>
+              <button id="downArr">↓</button>
+              <button id="rightArr">→</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+        const zoneSize = 11
+        const gameZone = document.getElementById('gamezone')
+        const body = document.getElementById('body')
+        let direction = 1; //1左 2右 3上 4下
+        let isWhole = 0
+        let include = true
+        let drawFoodNum = 0
+        let currentFood = ""
+        let score = document.getElementById('score')
+        if(localStorage.hasOwnProperty('score')){
+            score.innerHTML = `最高记录：${localStorage.getItem('score')}`
+        }
+        let snake  = []
+        snake = [
+          {x:7,y:7}
+        ]
+        let food = [
+            {x:4,y:4}
+        ]
+        let dx = 0
+        let dy = 0
+        let speed = 200
+        let color = '#ff005c';
+        let reColor = '#00ffd5';
+
+        gameZone.style.border = `8px solid #fff `;
+        body.style.backgroundColor = '#fff';
+
+        function drawSnake(){
+            gameZone.innerHTML = '' 
+            snake.forEach(element => {
+                const snakeEle = document.createElement('div')
+                snakeEle.className = 'snake'
+                snakeEle.style.gridColumn = (element.x + 1).toString();
+                snakeEle.style.gridRow = (element.y + 1).toString();
+                // snakeEle.style.backgroundColor = reColor;
+                snakeEle.style.backgroundPosition = "50%"
+                snakeEle.style.backgroungSize = "120%"
+                snakeEle.style.backgroundRepeat = "no-repeat"
+                if(snake.length == 1){
+                  snakeEle.style.backgroundImage = "url('./static/smallworm.gif')"
+                }
+                else{
+                  isWhole = 1
+                }
+                gameZone.appendChild(snakeEle)
+                if(isWhole == 1){
+                  let wholeSnake = document.querySelectorAll('.snake')
+                  wholeSnake.forEach(element => {
+                    element.style.backgroundImage = "url('./static/wormbody.gif')"
+                  })
+                  wholeSnake[0].style.backgroundImage = "url('./static/wormhead.gif')"
+                  wholeSnake[wholeSnake.length - 1].style.backgroundImage = "url('./static/wormtail.gif')"
+                }
+                if(direction == 1){
+                  document.querySelectorAll('.snake').forEach(function(element) {
+                    element.style.transform = "none"
+                    });
+                }
+                else if(direction == 2){
+                  document.querySelectorAll('.snake').forEach(function(element) {
+                    element.style.transform = "scaleX(-1)"
+                    });
+                }
+                else if(direction == 3){
+                  document.querySelectorAll('.snake').forEach(element => {
+                    element.style.transform = "rotate(90deg)"
+                  })
+                }
+                else if(direction == 4){
+                  document.querySelectorAll('.snake').forEach(element => {
+                    element.style.transform = "rotate(-90deg)"
+                  })
+                }
+            });
+        }
+
+        function drawFood(){
+            const foodEle = document.createElement('div')
+            foodEle.className = 'snake'
+            foodEle.style.gridColumn = (food.x + 1).toString();
+            foodEle.style.gridRow = (food.y + 1).toString();
+            if(drawFoodNum == 0){
+              let randomCreature = Math.floor(Math.random() * 30) + 1;
+            if (randomCreature != 29 && randomCreature != 30) {
+              let creatureNum = Math.floor(Math.random() * 5) + 1;
+              currentFood = `url('./static/creature${creatureNum}.gif')`
+            }
+            else if(randomCreature == 29){
+              currentFood = `url('./static/creature${randomCreature}.gif')`
+            }
+            else if(randomCreature == 30){
+              currentFood = `url('./static/creature${randomCreature}.gif')`
+            }
+            drawFoodNum = 1
+            }
+            foodEle.style.backgroundImage  = currentFood
+            foodEle.style.position = "relative"
+            foodEle.style.zIndex = 999
+            gameZone.appendChild(foodEle)
+        }
+
+        function getScore(){
+            let text = document.getElementById('text');
+            text.style.color = color;
+            text.innerText = `当前分数：${(snake.length - 1)}`
+        }
+
+        function move(){
+            const head = {x: snake[0].x + dx, y:snake[0].y + dy}
+            snake.unshift(head)
+            if(head.x === food.x && head.y === food.y){
+                getScore()
+                generateFood();
+            }
+            else{
+                snake.pop()
+            }
+            
+        }
+
+        function generateFood(){
+          include = true
+          drawFoodNum = 0
+          while(include){
+            food.x = Math.floor(Math.random() * zoneSize);
+            food.y = Math.floor(Math.random() * zoneSize);
+            snake.forEach(element => {
+              if(food.x == element.x || food.y == element.y){
+                
+              }
+              else{
+                include = false
+              }
+            })
+          }
+          
+        }
+
+        function checkCross(){
+            const head = snake[0]
+            if(head.x < 0 || head.x >= zoneSize || head.y < 0 || head.y >= zoneSize){
+                alert('Oops！撞到墙辣！你的分数：' + (snake.length - 1));
+                let currentScore = (snake.length -1 )
+                snake = [{ x: 7, y: 7 }];
+                dx = 0;
+                dy = 0;
+                if(!localStorage.hasOwnProperty('score')){
+                  localStorage.setItem('score',currentScore)
+                }
+                else{
+                  if(localStorage.getItem('score') < currentScore){
+                  localStorage.setItem('score',currentScore)
+                }
+                }
+                score.innerHTML = `最高记录：${localStorage.getItem('score')}`
+                window.location.href = "index.html"
+            }
+        }
+
+        function updateGame() {
+            move();
+            checkCross();
+            getScore();
+            drawSnake();
+            drawFood()
+        }
+
+        function handleKeyPress(event) {
+            switch (event.key) {
+                case 'ArrowUp':
+                    dx = 0;
+                    dy = -1;
+                    direction = 3;
+                    break;
+                case 'ArrowDown':
+                    dx = 0;
+                    dy = 1;
+                    direction = 4;
+                    break;
+                case 'ArrowLeft':
+                    dx = -1;
+                    dy = 0;
+                    direction = 1;
+                    break;
+                case 'ArrowRight':
+                    dx = 1;
+                    dy = 0;
+                    direction = 2;
+                    break;
+                case 'w':
+                    dx = 0;
+                    dy = -1;
+                    direction = 3;
+                    break;
+                case 's':
+                    dx = 0;
+                    dy = 1;
+                    direction = 4;
+                    break;
+                case 'a':
+                    dx = -1;
+                    dy = 0;
+                    direction = 1;
+                    break;
+                case 'd':
+                    dx = 1;
+                    dy = 0;
+                    direction = 2;
+                    break;
+            }
+        }
+
+        document.getElementById('upArr').onclick = function(){
+          dx = 0;
+          dy = -1;
+          direction  = 3;
+        }
+        document.getElementById('downArr').onclick = function(){
+          dx = 0;
+          dy = 1;
+          direction = 4;
+        }
+        document.getElementById('leftArr').onclick = function(){
+          dx = -1;
+          dy = 0;
+          direction = 1;
+        }
+        document.getElementById('rightArr').onclick = function(){
+          dx = 1;
+          dy = 0;
+          direction = 2;
+        }
+
+
+        document.addEventListener('keydown', handleKeyPress);
+
+        function gameLoop() {
+            updateGame();
+            setTimeout(gameLoop, speed);
+        }
+
+        getScore()
+        generateFood();
+        gameLoop();
+    </script>
+  </body>
+</html>
