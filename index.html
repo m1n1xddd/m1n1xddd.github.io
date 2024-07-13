@@ -21,8 +21,8 @@
       }
       #gamezone{
         display: grid;
-        grid-template-columns: repeat(11, 30px);
-        grid-template-rows: repeat(11,30px);
+        grid-template-columns: repeat(10, 30px);
+        grid-template-rows: repeat(10,30px);
         background-color: #fff;
       }
       .out{
@@ -152,12 +152,11 @@
       @media(max-width:800px){
         #gamezone{
         display: grid;
-        grid-template-columns: repeat(11, 30px);
-        grid-template-rows: repeat(11,30px);
+        grid-template-columns: repeat(10, 30px);
+        grid-template-rows: repeat(10,30px);
         background-color: #fff;
       }
       .out{
-        width: 350px;
         border-radius: 10px 10px 10px 10px;
         border: 2.5vw dashed #ff005c;
         display: flex;
@@ -324,7 +323,7 @@
       </div>
     </div>
     <script>
-        const zoneSize = 11
+        const zoneSize = 10
         const gameZone = document.getElementById('gamezone')
         const body = document.getElementById('body')
         let direction = 1; //1左 2右 3上 4下
